@@ -74,6 +74,9 @@ class Admin(User):
     def delete_item(self,restaurent,item):
         restaurent.menu.remove_item(item)
 
+    def view_menu(self,restaurant):
+        restaurant.menu.show_menu()
+
 
 
 # mama_res = Restaurent("mama restaurent")
