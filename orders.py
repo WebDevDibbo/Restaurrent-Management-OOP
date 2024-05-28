@@ -4,9 +4,9 @@ class Order:
 
     def add_item(self,item):
         if item in self.items:
-            self.items[item] += item.quantity #jodi item ta cart e already thake
+            self.items[item] += item.quantity #*jodi item ta cart e already thake
         else:
-            self.items[item] = item.quantity #cart e item jodi na thake
+            self.items[item] = item.quantity #*cart e item jodi na thake
 
     def remove(self,item):
         if item in self.items:

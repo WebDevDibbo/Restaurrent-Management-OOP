@@ -6,7 +6,6 @@ class Restaurant:
     def __init__(self,name) -> None:
         self.name = name
         self.employees = [] # eta hoche amader employees database
-        #!!menu bujinai
         self.menu = Menu()
 
     def add_employee(self,employee): #employee object pass korchi 
@@ -14,6 +13,7 @@ class Restaurant:
         print(f'{employee.name} is added!!')
 
     def view_employee(self):
-        print('Employee list!!')
+        print('*****Employee list*****')
+        print("Name\tEmail\tPhone\taddress")
         for emp in self.employees:
             print(emp.name,emp.email,emp.phone,emp.address)
