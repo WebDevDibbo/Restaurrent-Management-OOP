@@ -15,25 +15,30 @@ class User(ABC):
 class Customer(User):
     def __init__(self, name, phone, email, address) -> None:
         super().__init__(name, phone, email, address)
-        self.cart = None
+        self.cart = Order()
 
     def view_menu(self,restaurent):
         restaurent.menu.show_menu()
 
     # *!!bujinai restaurent kivabe asche
-    def add_to_cart(self,restaurent,item_name):
+    def add_to_cart(self,restaurent,item_name,quantity):
         item = restaurent.menu.find_item(item_name)
         if item:
-            pass
+            if quantity > item.quantity:
+                print("----->item quantity exceeded<-----")
+            else:
+                item.quantity = quantity
+                self.cart.add_item(item)
+                print("item added")
         else:
-            print("item not found")
+            print("----->item not found<-----")
     
     def view_cart(self):
-        print("**view cart**")
+        print("********VIEW CART************")
         print("Name\tPrice\tQuantity")
         for item,quantity in self.cart.items.items():
-            print(f"{item.name} {item.price} {quantity}")
-        print("Total Price : {self.cart.total_price}")
+            print(f"{item.name}\t{item.price}\t{quantity}")
+        print(f"Total Price : {self.cart.total_price}")
 
 class Order:
     def __init__(self):
@@ -49,6 +54,7 @@ class Order:
         if item in self.items:
             del self.items[item]
 
+    @property
     def total_price(self):
         return sum(item.price * quantity for item,quantity in self.items.items())
 
@@ -89,7 +95,7 @@ class Restaurent:
         self.name = name
         self.employees = [] # eta hoche amader employees database
         #!!menu bujinai
-        self.menu = FoodItem()
+        self.menu = Menu()
 
     def add_employee(self,employee): #employee object pass korchi 
         self.employees.append(employee) 
@@ -138,8 +144,20 @@ class FoodItem:
         self.price = price
         self.quantity = quantity
 
-adm = Admin('karim',34345354,"karim@gmail.com","dinajpur")
+mama_res = Restaurent("mama restaurent")
+admin = Admin('karim',34345354,"karim@gmail.com","dinajpur")
 mn = Menu()
 item = FoodItem("Pizza",12.45,10)
-mn.add_menu_item(item)
-mn.show_menu()
+item1 = FoodItem("Burger",10,30)
+admin.add_new_item(mama_res,item)
+admin.add_new_item(mama_res,item1)
+
+
+customer = Customer("Rahim",9874538945,"rahim@gmail.com","barishal")
+customer.view_menu(mama_res)
+
+item_name = input("Enter item Name : ")
+item_quantity = int(input("Enter Item quantity : ")
+)
+customer.add_to_cart(mama_res,item_name,item_quantity)
+customer.view_cart()
