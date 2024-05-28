@@ -27,12 +27,17 @@ class Admin(User):
         super().__init__(name,phone,email,address)
 
     #* admin just func call korbe kaj hoye jabe behind the scene ki hoche seta amra abstract kore raktesi mane admin dekte parbe na kivabe object toiri hoche print hoche 
-
     def add_employee(self,restaurent,employee): #Restaurent class er ekta object restaurent
         restaurent.add_employee(employee)
 
     def view_employee(self,restaurent):
         restaurent.view_employee()
+
+    def add_new_item(self,restaurent,item):
+        restaurent.menu.add_menu_item(item)
+
+    def delete_item(self,restaurent,item):
+        restaurent.menu.remove_item(item)
         
 
 #** employee add and employee delete er jonno ekta class
@@ -40,6 +45,7 @@ class Restaurent:
     def __init__(self,name) -> None:
         self.name = name
         self.employees = [] # eta hoche amader employees database
+        self.menu = FoodItem()
 
     def add_employee(self,employee): #employee object pass korchi 
         self.employees.append(employee) 
@@ -49,6 +55,7 @@ class Restaurent:
         print('Employee list!!')
         for emp in self.employees:
             print(emp.name,emp.email,emp.phone,emp.address)
+
 
 
 #** product add and product delete er jonno ekta class
@@ -73,8 +80,22 @@ class Menu:
         else:
             print("item not found")
 
+    def show_menu(self):
+        print("********Menu************")
+        print("Name\tPrice\tQuantity")
+        for item in self.items:
+            print(f"{item.name}\t{item.price}\t{item.quantity}")
 
+ 
+
+class FoodItem:
+    def __init__(self,name,price,quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
 
 adm = Admin('karim',34345354,"karim@gmail.com","dinajpur")
-adm.add_employee("sagor","sagor@gmail.com",948473,"chattogram",33,"chef",15000)
-adm.view_employee()
+mn = Menu()
+item = FoodItem("Pizza",12.45,10)
+mn.add_menu_item(item)
+mn.show_menu()
